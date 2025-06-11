@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <title>Calculator</title>
+    </head>
+    <body>
+        <table border="1">
+            <tr>
+                <td colspan="5">
+                    <input type="text" id="inputBox" value="0">
+                </td>
+            </tr>
+            <tr>
+                <td class="operatorBtn" onclick="operatorBtnPressed('x2')">x<sup>2</sup></td>
+                <td class="operatorBtn" onclick="operatorBtnPressed('x3')">x<sup>3</sup></td>
+                <td class="operatorBtn" onclick="operatorBtnPressed('xy')">x<sup>y</sup></td>
+                <td class="operatorBtn" onclick="operatorBtnPressed('%')">%</td>
+            </tr>
+            <tr>  
+                <td class="digitBtn" onclick="digitBtnPressed(7)">7</td>
+                <td class="digitBtn" onclick="digitBtnPressed(8)">8</td>
+                <td class="digitBtn" onclick="digitBtnPressed(9)">9</td>
+                <td class="operatorBtn" onclick="operatorBtnPressed('x')">x</td>
+            </tr>
+            <tr>
+                <td class="digitBtn" onclick="digitBtnPressed(4)">4</td>
+                <td class="digitBtn" onclick="digitBtnPressed(5)">5</td>
+                <td class="digitBtn" onclick="digitBtnPressed(6)">6</td>
+                <td class="operatorBtn" onclick="operatorBtnPressed('-')">-</td>
+            </tr>
+            <tr>
+                <td class="digitBtn" onclick="digitBtnPressed(1)">1</td>
+                <td class="digitBtn" onclick="digitBtnPressed(2)">2</td>
+                <td class="digitBtn" onclick="digitBtnPressed(3)">3</td>
+                <td class="operatorBtn" onclick="operatorBtnPressed('+')">+</td>
+            </tr>
+            <tr>
+                <td class="digitBtn" colspan="2" onclick="digitBtnPressed(0)">0</td>
+                <td class="ACBtn" onclick="btnACPressed()">AC</td> <!--AC == All Clear-->
+                <td class="operatorBtn" onclick="operatorBtnPressed('/')">/</td>
+            </tr>
+            <tr>
+                <td class="operatorBtn" colspan="4" onclick="equalsBtnPressed()">=</td>
+            </tr>
+        </table>
+        <script>
+            var newline = true;     //removing default value 0, when clicking on a number
+            var value1;
+            var currentOperator;
+            const e = 2.7182818284590452353602874713526624977572;
+            //var finalTotal;
+
+            //eventHandler for clicking on number buttons
+            function digitBtnPressed(button){
+                if(newline){
+                    document.getElementById("inputBox").value = button;
+                    newline = false;
+                }else{
+                    var currentValue = document.getElementById("inputBox").value;
+                    document.getElementById("inputBox").value = currentValue + button;
+                }  
+            }
+
+            //eventHandler for clicking AC button
+            function btnACPressed(){
+                document.getElementById("inputBox").value = 0;
+                newline = true;
+            }
+
+            //eventHandler for clicking operator buttons (+, -, x, /,x2,x3,xy)
+            function operatorBtnPressed(operator){
+                currentOperator = operator;
+                value1 = parseInt(document.getElementById("inputBox").value);
+                newline = true;
+            }
+
+            //eventHandler for clicking equals button (=)
+            function equalsBtnPressed(){
+                var value2 = parseInt(document.getElementById("inputBox").value);
+                var finalTotal;
+
+                switch(currentOperator){
+                    case "+":
+                        finalTotal = value1 + value2;
+                        break;
+                    case "-":
+                        finalTotal = value1 - value2;
+                        break;
+                    case "x":
+                        finalTotal = value1 * value2;
+                        break;
+                    case "/": 
+                        finalTotal = value1 / value2;
+                        break;
+                    case "x2": 
+                        finalTotal = value1 ** 2;
+                        break;
+                    case "x3": 
+                        finalTotal = value1 ** 3;
+                        break;
+                    case "xy": 
+                        finalTotal = value1 ** value2;
+                        break;
+                    case "%": 
+                        finalTotal = value1 / 100;
+                        break;
+                }
+
+                document.getElementById("inputBox").value = finalTotal;
+
+                value1 = 0;
+                newline = true;
+            }
+        </script>
+    </body>
+</html>
